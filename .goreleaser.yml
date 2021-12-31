@@ -20,7 +20,7 @@ archives:
       arm64: arm64
     format_overrides:
       - goos: linux
-        format: zip
+        format: tar.xz
       - goos: windows
         format: zip
       - goos: darwin
