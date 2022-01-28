@@ -99,11 +99,14 @@ func main() {
 		DNSNames:     dnss,
 		IPAddresses:  cips,
 		IsCA:         false,
-		KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+		KeyUsage:     x509.KeyUsageDigitalSignature,
 		ExtKeyUsage: []x509.ExtKeyUsage{
 			x509.ExtKeyUsageServerAuth,
 			x509.ExtKeyUsageClientAuth,
 		},
+	}
+	if ctype == "rsa" {
+		cert.KeyUsage |= x509.KeyUsageKeyEncipherment
 	}
 
 	buf, err := x509.CreateCertificate(rand.Reader, &cert, &cert, pkey.Public(), pkey)
