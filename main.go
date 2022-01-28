@@ -34,7 +34,7 @@ func main() {
 	flag.StringVar(&ctype, "type", "ec", "Certificate type, \"rsa\" or \"ec\"")
 
 	var name string
-	flag.StringVar(&name, "name", "App", "Common name for certificate")
+	flag.StringVar(&name, "name", "App", "Name for certificate")
 
 	var years int
 	flag.IntVar(&years, "years", 100, "Certificate validity period")
