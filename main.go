@@ -31,7 +31,7 @@ func (i *stringArray) Set(value string) error {
 
 func main() {
 	var ctype string
-	flag.StringVar(&ctype, "type", "rsa", "Certificate type, \"rsa\" or \"ec\"")
+	flag.StringVar(&ctype, "type", "ec", "Certificate type, \"rsa\" or \"ec\"")
 
 	var name string
 	flag.StringVar(&name, "name", "App", "Common name for certificate")
@@ -54,7 +54,7 @@ func main() {
 	fmt.Println(" - From:        ", before.Format(time.UnixDate))
 	fmt.Println(" - To:          ", after.Format(time.UnixDate))
 	fmt.Println(" - Type:        ", strings.ToUpper(ctype))
-	fmt.Println(" - Common name: ", name)
+	fmt.Println(" - Name:        ", name)
 	fmt.Println(" - DNS names:   ", dnss)
 	fmt.Println(" - IP addresses:", ips)
 
@@ -85,19 +85,24 @@ func main() {
 		cips = append(cips, cip)
 	}
 
+	subj := pkix.Name{
+		CommonName:   name,
+		Organization: []string{name},
+	}
+
 	cert := x509.Certificate{
 		SerialNumber: big.NewInt(before.Unix()),
-		Issuer:       pkix.Name{CommonName: name},
-		Subject:      pkix.Name{CommonName: name},
+		Issuer:       subj,
+		Subject:      subj,
 		NotBefore:    before,
 		NotAfter:     after,
 		DNSNames:     dnss,
 		IPAddresses:  cips,
 		IsCA:         false,
-		KeyUsage:     x509.KeyUsageDigitalSignature,
+		KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
 		ExtKeyUsage: []x509.ExtKeyUsage{
-			x509.ExtKeyUsageClientAuth,
 			x509.ExtKeyUsageServerAuth,
+			x509.ExtKeyUsageClientAuth,
 		},
 	}
 

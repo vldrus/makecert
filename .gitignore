@@ -1,8 +1,8 @@
-.idea/
-.vscode/
+/.idea
+/.vscode
 
-cert.crt
-cert.key
+/cert.crt
+/cert.key
 
-makecert
-makecert.exe
+/makecert
+/makecert.exe

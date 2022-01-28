@@ -8,9 +8,9 @@ Usage of makecert:
   -ip value
         IP address for certificate
   -name string
-        Common name for certificate (default "App")
+        Name for certificate (default "App")
   -type string
-        Certificate type, "rsa" or "ec" (default "rsa")
+        Certificate type, "rsa" or "ec" (default "ec")
   -years int
         Certificate validity period (default 100)
 ```
